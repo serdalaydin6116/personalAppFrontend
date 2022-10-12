@@ -11,6 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContext';
+import { toastErrorNotify, toastSuccessNotify } from '../helper/ToastNotify';
 
 
 
@@ -24,12 +25,13 @@ export default function DeparmentDetail() {
     const {myKey}= React.useContext(AuthContext)
     const isStaff=sessionStorage.getItem("is_staff") || false
     const [data,setData] = React.useState()
-    const [deparmentId,setId] = React.useState()
+    const [departmentId,setId] = React.useState()
     const navigate = useNavigate()
-    const getDepartments= async (str) =>{
+    const getDepartments= async () =>{
         try {
-            const res = await axios.get(`http://127.0.0.1:8000/api/department/${str}/`,{headers:{'Authorization':`Token ${myKey}`}})
-            const rows= res.data[0].deparments.map((item,index)=> createData(index+1,item.days_since_joined,item.title,item.first_name,item.last_name,item.gender,item.salary,item.is_staffed,item.id) );
+            const res = await axios.get(`http://anthonycw.pythonanywhere.com/api/department/${str}/`,{headers:{'Authorization':`Token ${myKey}`}})
+            console.log(res)
+            const rows= res.data[0].departments.map((item,index)=> createData(index+1,item.days_since_joined,item.title,item.first_name,item.last_name,item.gender,item.salary,item.is_staffed,item.id) );
             setData(rows)
             setId(res.data[0].id)
         }
@@ -38,17 +40,24 @@ export default function DeparmentDetail() {
         }
     }
     React.useEffect(()=>{
-        getDepartments(str)
+        getDepartments()
     },[])
 
-    const handleDelete=(id)=>{
-
+    const handleDelete= async (id)=>{
+      try {
+        const res = await axios.delete(`http://anthonycw.pythonanywhere.com/api/personal/${id}`,{headers:{'Authorization':`Token ${myKey}`}})
+        console.log(res)
+        toastSuccessNotify("Personel başarıyla silindi!")
+        getDepartments()
+      } catch (error) {
+        toastErrorNotify("Bu işlemi yapabilmen için daha çok çalışman lazım")
+      }
     }
     const handleEdit =()=>{
 
     }
     const handleClick = ()=>{
-      navigate("/create-personal",{state:{deparmentId}})
+      navigate("/create-personal",{state:{departmentId}})
     }
 
   return (
@@ -66,7 +75,7 @@ export default function DeparmentDetail() {
             <TableCell align="center">Gender</TableCell>
             <TableCell align="center">Salary</TableCell>
             <TableCell align="center">Is Staffed?</TableCell>
-            {isStaff &&  (
+            {isStaff !== "false" &&  (
             <>
                 <TableCell align="center">Edit</TableCell>
                 <TableCell align="center">Delete</TableCell>
@@ -92,7 +101,7 @@ export default function DeparmentDetail() {
               <TableCell align="center">{row.salary} $</TableCell>
               <TableCell align="center">{row.is_staffed ? "✅" : "❌"}</TableCell>
               {
-                isStaff && (
+                isStaff!== "false" && (
                     <>
                         <TableCell align="center" sx={{cursor: "pointer"}} onClick={handleEdit}><EditIcon/></TableCell>
                         <TableCell align="center" sx={{cursor: "pointer"}} onClick={()=>handleDelete(row.id)}><DeleteIcon/></TableCell>
@@ -105,7 +114,7 @@ export default function DeparmentDetail() {
       </Table>
     </TableContainer>
 
-   {isStaff && (<TableCell onClick={handleClick} sx={{backgroundColor: "darkslategray",color:"white"}}> Add Personal</TableCell>)}
+   {isStaff !== "false" && (<TableCell onClick={handleClick} sx={{backgroundColor: "darkslategray",color:"white"}}> Add Personal</TableCell>)}
     </div>
   );
 }
