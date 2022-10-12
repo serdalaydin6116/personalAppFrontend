@@ -20,8 +20,7 @@ const theme = createTheme();
 
 export default function Register() {
   const navigate = useNavigate()
-  const{createUser}=useContext(AuthContext)
-
+  const {createUser} = React.useContext(AuthContext)
 
   return (
     <ThemeProvider theme={theme}>
@@ -62,7 +61,7 @@ export default function Register() {
         onSubmit={(values,actions)=>{
           actions.resetForm()
           actions.setSubmitting(false)
-          createUser
+          createUser(values.email,values.password,values.firstName,values.lastName,values.userName)
         }}
         >
           {({values,handleChange,errors,touched,handleBlur})=>(
@@ -150,4 +149,6 @@ export default function Register() {
     </ThemeProvider>
   );
 }
+
+
 

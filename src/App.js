@@ -17,13 +17,14 @@ function App() {
       marginTop: 0
     }}>
     <AuthContextProvider>
-      <PersonalContextProvider>
+      {/* <PersonalContextProvider> */}
         <AppRouter />
         <ToastContainer />
-      </PersonalContextProvider>
+      {/* </PersonalContextProvider> */}
     </AuthContextProvider>
     </div>
   );
 }
 
 export default App;
+
