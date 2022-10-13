@@ -1,10 +1,3 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -57,7 +50,7 @@ export default function PersonalCreate() {
      });
      
      let reqOptions = {
-       url: "http://anthonycw.pythonanywhere.com/api/personal/",
+       url: "https://anthonycw.pythonanywhere.com/api/personal/",
        method: "POST",
        headers: headersList,
        data: bodyContent,
