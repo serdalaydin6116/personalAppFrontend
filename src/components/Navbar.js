@@ -34,7 +34,7 @@ export default function NavBar() {
   };
 
   return (
-    <Box sx={{marginBottom:"0px"}} >
+    <Box sx={{marginBottom:"2px"}} >
      
       <AppBar position="static" style={{cursor:"pointer"}} sx={{backgroundColor:"tomato"}}>
         <Toolbar>
