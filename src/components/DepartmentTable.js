@@ -43,14 +43,14 @@ export default function DepartmentTable() {
     }
 
   return (
-    <div style={{margin:"1rem"}}>
+    <div style={{margin:"1.1rem"}}>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell align="center">N.</TableCell>
             <TableCell align="center">Deparment Name</TableCell>
-            <TableCell align="center">How many staff work in this department?</TableCell>
+            <TableCell align="center">How many staffs work in this department?</TableCell>
             <TableCell align="center">Title</TableCell>
           </TableRow>
         </TableHead>
@@ -63,6 +63,7 @@ export default function DepartmentTable() {
               <TableCell align="center">{row.index}</TableCell>
               <TableCell align="center" onClick={()=>handleClick(row.name)} sx={{cursor: "pointer"}}>{row.name}</TableCell>
               <TableCell align="center">{row.personal_count}</TableCell>
+              <TableCell align="center" onClick={()=>handleClick(row.name.title)} sx={{cursor: "pointer"}}>{row.name}</TableCell>
               {/* <TableCell align="center">{row.item.title}</TableCell> */}
             </TableRow>
           ))}
